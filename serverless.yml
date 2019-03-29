@@ -1,0 +1,23 @@
+service: ping-pong-ladder-bot
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: test
+  environment:
+    API_BASE: https://lm-ping-pong-ladder.herokuapp.com
+    STAGE: ${opt:stage, self:provider.stage}
+
+package:
+  include:
+    - index.js
+    - package-lock.json
+    - package.json
+    - app/**
+    - node_modules/**
+
+functions:
+  index:
+    handler: index.handler
+    events:
+      - http: POST challenge
